@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrevista con José José</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    animation-name: introAnimation;
+    animation-duration: 8s;
+  }
+  .intro h1 {
+    color: #fff;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+  .intro p {
+    color: #fff;
+    font-size: 20px;
+  }
+
+  @keyframes introAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro">
+  <h1>Alexander Valencia Camilo</h1>
+  <p>
+  </p>
+</div>
+
+<h1>Entrevista con José José</h1>
+
+<p>Por favor, responde a estas preguntas para obtener una recomendación de canción de José José.</p>
+
+<select id="estado-animo">
+  <option value="">Selecciona tu estado de ánimo</option>
+  <option value="triste">Triste</option>
+  <option value="feliz">Feliz</option>
+  <option value="nostalgico">Nostálgico</option>
+  <option value="enamorado">Enamorado</option>
+</select>
+
+<select id="momento-dia">
+  <option value="">Selecciona el momento del día</option>
+  <option value="mañana">Mañana</option>
+  <option value="tarde">Tarde</option>
+  <option value="noche">Noche</option>
+</select>
+
+<select id="tipo-evento">
+  <option value="">Selecciona el tipo de evento</option>
+  <option value="fiesta">Fiesta</option>
+  <option value="cena-romantica">Cena Romántica</option>
+  <option value="reunion-amigos">Reunión con Amigos</option>
+  <option value="relax">Relax</option>
+</select>
+
+<select id="estilo-musical">
+  <option value="">Selecciona tu estilo musical preferido</option>
+  <option value="balada">Balada</option>
+  <option value="bolero">Bolero</option>
+  <option value="pop">Pop</option>
+  <option value="romantica">Romántica</option>
+</select>
+
+<select id="tema-cancion">
+  <option value="">Selecciona el tema de la canción</option>
+  <option value="amor">Amor</option>
+  <option value="desamor">Desamor</option>
+  <option value="nostalgia">Nostalgia</option>
+  <option value="esperanza">Esperanza</option>
+</select>
+
+<!-- Botón para correr el juego -->
+<button id="juego">Jugar</button>
+
+<!-- Contenedor para mostrar el resultado del juego -->
+<div id="resultado"></div>
+
+<!-- Resto de tus elementos y scripts JavaScript -->
+
+<div id="historial"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var introElement = document.getElementById("intro");
+  introElement.addEventListener("animationend", function() {
+    introElement.style.display = "none";
+  });
+
+  // Evento click para el botón del juego
+  document.getElementById("juego").addEventListener("click", function() {
+    jugar();
+  });
+});
+
+function jugar() {
+  var numeroAleatorio = Math.floor(Math.random() * 100) + 1; // Genera un número aleatorio entre 1 y 100
+  var intentos = 0;
+  var mensaje = "";
+
+  while (true) {
+    var intento = prompt("Adivina el número (entre 1 y 100):");
+
+    if (intento === null) {
+      mensaje = "Juego cancelado";
+      break;
+    }
+
+    var numero = parseInt(intento);
+    
+    if (isNaN(numero)) {
+      mensaje = "Por favor ingresa un número válido";
+    } else {
+      intentos++;
+
+      if (numero < numeroAleatorio) {
+        mensaje = "El número es mayor. Intenta de nuevo.";
+      } else if (numero > numeroAleatorio) {
+        mensaje = "El número es menor. Intenta de nuevo.";
+      } else {
+        mensaje = "¡Felicidades! ¡Has adivinado el número en " + intentos + " intentos!";
+        break;
+      }
+    }
+
+    alert(mensaje);
+  }
+
+  document.getElementById("resultado").textContent = mensaje;
+}
+</script>
+
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var introElement = document.getElementById("intro");
+      introElement.addEventListener("animationend", function() {
+        introElement.style.display = "none";
+      });
+    });
+    </script>
+    
+    </body>
+    </html>
+
+<button onclick="recomendarCancion()">¡Recomiéndame una canción!</button>
+<button onclick="limpiarHistorial()">Limpiar Historial</button>
+
+<div id="cancion-recomendada"></div>
+<div id="historial"></div>
+<div id="portada" class="portada"></div>
+
+<audio id="audioCancion" preload="auto"></audio>
+
+<script>
+  var historial = [];
+  
+  function recomendarCancion() {
+    var estadoAnimo = document.getElementById("estado-animo").value;
+    var momentoDia = document.getElementById("momento-dia").value;
+    var tipoEvento = document.getElementById("tipo-evento").value;
+    var estiloMusical = document.getElementById("estilo-musical").value;
+    var temaCancion = document.getElementById("tema-cancion").value;
+    var cancionRecomendada = document.getElementById("cancion-recomendada");
+    var historialElement = document.getElementById("historial");
+  
+    var recomendacion = "";
+  
+    if (estadoAnimo && momentoDia && tipoEvento && estiloMusical && temaCancion) {
+      switch(estadoAnimo) {
+        case "triste":
+          if (momentoDia === "noche" && tipoEvento === "relax") {
+            recomendacion = "El Triste";
+          } else if (momentoDia === "tarde" && tipoEvento === "relax") {
+            recomendacion = "Amar y Querer";
+          } else if (momentoDia === "mañana" && tipoEvento === "fiesta") {
+            recomendacion = "Preso";
+          } else {
+            recomendacion = "Me Vas a Echar de Menos";
+          }
+          break;
+        case "feliz":
+          if (momentoDia === "mañana" && tipoEvento === "relax") {
+            recomendacion = "Buenos Días Amor";
+          } else if (momentoDia === "tarde" && tipoEvento === "reunion-amigos") {
+            recomendacion = "Lo Pasado, Pasado";
+          } else {
+            recomendacion = "Gavilán o Paloma";
+          }
+          break;
+        case "nostalgico":
+          if (momentoDia === "tarde" && tipoEvento === "reunion-amigos") {
+            recomendacion = "Almohada";
+          } else if (momentoDia === "noche" && tipoEvento === "cena-romantica") {
+            recomendacion = "El Amor Acaba";
+          } else {
+            recomendacion = "Me Basta";
+          }
+          break;
+        case "enamorado":
+          if (momentoDia === "noche" && tipoEvento === "cena-romantica") {
+            recomendacion = "Lo Que No Fue No Será";
+          } else if (momentoDia === "tarde" && tipoEvento === "reunion-amigos") {
+            recomendacion = "A Esa";
+          } else {
+            recomendacion = "40 y 20";
+          }
+          break;
+        default:
+          recomendacion = "Por favor, selecciona una opción en cada menú.";
+      }
+  
+      // Agregar la recomendación al historial
+      historial.push({
+        cancion: recomendacion,
+        estadoAnimo: estadoAnimo,
+        momentoDia: momentoDia,
+        tipoEvento: tipoEvento,
+        estiloMusical: estiloMusical,
+        temaCancion: temaCancion
+      });
+
+    // Reproducir unos segundos de la canción recomendada
+    var audio = document.getElementById("audioCancion");
+    audio.src = obtenerURLCancion(recomendacion); // Función para obtener la URL de la canción
+    audio.currentTime = 0; // Reiniciar la reproducción desde el principio
+    audio.play(); // Reproducir el audio
+
+    // Detener la reproducción después de unos segundos
+    setTimeout(function() {
+      audio.pause(); // Pausar la reproducción
+    }, 5000); // Detener la reproducción después de 5 segundos (cambiar el valor según lo desees)
+
+    // Mostrar la recomendación y actualizar el historial
+    cancionRecomendada.innerHTML = "<p><strong>Canción recomendada:</strong> " + recomendacion + "</p>" +
+                                    "<button onclick='abrirSpotify(\"" + recomendacion + "\")'>Escuchar en Spotify</button>";
+    mostrarPortada(recomendacion);
+    mostrarHistorial();
+  } else {
+    cancionRecomendada.textContent = "Por favor, selecciona una opción en cada menú.";
+  }
+}
+
+function mostrarPortada(cancion) {
+  var portadaElement = document.getElementById("portada");
+  portadaElement.innerHTML = "<img src='https://via.placeholder.com/300' alt='Portada del álbum'>";
+  portadaElement.style.display = "block";
+  setTimeout(function() {
+    portadaElement.style.display = "none";
+  }, 3000); // Ocultar la portada después de 3 segundos (simulación de animación)
+}
+
+function mostrarHistorial() {
+  var historialElement = document.getElementById("historial");
+  historialElement.innerHTML = "<h3 class='historial-titulo'>Historial de Recomendaciones:</h3>";
+  historial.forEach(function(item) {
+    var mensaje = "<div class='historial-item'><strong>Canción:</strong> " + item.cancion + "<br><strong>Estado de Ánimo:</strong> " + item.estadoAnimo + "<br><strong>Momento del Día:</strong> " + item.momentoDia + "<br><strong>Tipo de Evento:</strong> " + item.tipoEvento + "<br><strong>Estilo Musical:</strong> " + item.estiloMusical + "<br><strong>Tema de la Canción:</strong> " + item.temaCancion + "</div>";
+    historialElement.innerHTML += mensaje;
+  });
+}
+
+function limpiarHistorial() {
+  historial = [];
+  mostrarHistorial();
+}
+
+// Obtener la URL de la canción
+function obtenerURLCancion(cancion) {
+  // Aquí puedes implementar la lógica para obtener la URL real de la canción
+  // Por ahora, solo se retorna una URL de prueba
+  return "URL_DE_LA_CANCION"; // Reemplazar con la URL real de la canción
+}
+
+// Abrir la página de la canción en Spotify
+function abrirSpotify(cancion) {
+  window.open("https://open.spotify.com/search/José José " + encodeURIComponent(cancion));
+}
+</script>
+
+</body>
+</html>
